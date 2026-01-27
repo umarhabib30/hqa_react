@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+
+
+@theme {
+    --font-*: initial;
+    --font-serif: "Georgia", serof;
+
+    --text-h1-mobile: 30px;
+    --text-h1-desktop: 48px;
+
+
+
+
+    /* H2 font sizes */
+    --text-h2-mobile: 26px;
+    --text-h2-desktop: 30px;
+
+
+    /* P font sizes */
+    --text-p-mobile: 18px;
+    --text-p-desktop: 20px;
+
+    /* P font sizes for slogan */
+    --text-slogan-mobile: 22px;
+    --text-slogan-desktop: 26px;
+}
+
+
+
+/* Cards */
+.clip-card {
+    clip-path: polygon(0 0, 100% 0, 96% 100%, 0% 100%);
+}
+
+.clip-left {
+    clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+   
+}
+
+.h1 {
+    font-size: var(--text-h1-mobile);
+    font-family: var(--font-serif);
+}
+
+@media (min-width: 768px) {
+    .h1 {
+        font-size: var(--text-h1-desktop);
+    }
+}
+
+/* H2 */
+.h2 {
+    font-size: var(--text-h2-mobile);
+    font-family: var(--font-serif);
+}
+
+@media (min-width: 768px) {
+    .h2 {
+        font-size: var(--text-h2-desktop);
+    }
+}
+
+
+/* p */
+.p {
+    font-size: var(--text-p-mobile);
+    font-family: var(--font-serif);
+}
+
+@media (min-width: 768px) {
+    .p {
+        font-size: var(--text-p-desktop);
+    }
+}
+
+/* p  for slogan*/
+.slogan {
+    font-size: var(--text-slogan-mobile);
+    font-family: var(--font-serif);
+}
+
+@media (min-width: 768px) {
+    .slogan {
+        font-size: var(--text-slogan-desktop);
+    }
+}
+
+
