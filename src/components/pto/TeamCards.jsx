@@ -1,114 +1,196 @@
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { FaPlus, FaTimes } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 import { SlideUp } from "../../../utility/animation";
 
-const cardsData = [
+const ptoMembers = [
   {
-    id: 1,
-    icon: "/pto/t1.png",
-    stripColor: "bg-[#FF6B6B]",
-    circleColor: "bg-[#FF6B6B]",
-    para: "President",
-    heading: "Natasha Osmanbhoy",
-    desc: "Leading with vision and heart.",
+    img: "/pto/team/natasha.jpg",
+    name: "Natasha Osmanbhoy",
+    role: "President",
+    description: "Leading with vision and heart.",
   },
   {
-    id: 2,
-    icon: "/pto/t2.png",
-    stripColor: "bg-[#4ECDC4]",
-    circleColor: "bg-[#4ECDC4]",
-    para: "Vice President",
-    heading: "Nasuha Marican",
-    desc: "Creating events that bring smiles and stories.",
+    img: "/pto/team/nasuha.jpg",
+    name: "Nasuha Marican",
+    role: "Vice President",
+    description: "Creating events that bring smiles and stories.",
   },
   {
-    id: 3,
-    icon: "/pto/t3.png",
-    stripColor: "bg-[#FFA500]",
-    circleColor: "bg-[#FFA500]",
-    para: "Secretary",
-    heading: "Regina Khan",
-    desc: "Ensuring communications are clear, organized, and open.",
+    img: "/pto/team/regina.jpg",
+    name: "Regina Khan",
+    role: "Secretary",
+    description: "Ensuring communications are clear and organized.",
   },
   {
-    id: 4,
-    icon: "/pto/t4.png",
-    stripColor: "bg-[#95E1D3]",
-    circleColor: "bg-[#95E1D3]",
-    para: "Treasurer",
-    heading: "Safia Baig",
-    desc: "Managing finances responsibly to support our students' dreams.",
+    img: "/pto/team/safia.jpg",
+    name: "Safia Baig",
+    role: "Treasurer",
+    description: "Managing finances responsibly to support students.",
+  },
+  // Members (optional)
+  {
+    img: "/pto/team/member1.jpg",
+    name: "Member Name 1",
+    role: "Member",
+    description: "Supporting PTO activities and school events.",
   },
   {
-    id: 5,
-    icon: "/pto/t1.png",
-    stripColor: "bg-[#FF6B6B]",
-    circleColor: "bg-[#FF6B6B]",
-    para: "Member",
-    heading: "Natasha Osmanbhoy",
-    desc: "",
-  },
-  {
-    id: 6,
-    icon: "/pto/t2.png",
-    stripColor: "bg-[#4ECDC4]",
-    circleColor: "bg-[#4ECDC4]",
-    para: "Member",
-    heading: "Nasuha Marican",
-    desc: "",
-  },
-  {
-    id: 7,
-    icon: "/pto/t3.png",
-    stripColor: "bg-[#FFA500]",
-    circleColor: "bg-[#FFA500]",
-    para: "Member",
-    heading: "Regina Khan",
-    desc: "",
+    img: "/pto/team/member2.jpg",
+    name: "Member Name 2",
+    role: "Member",
+    description: "Helping build a stronger school community.",
   },
 ];
 
-export default function SevenCardsGrid() {
+export default function PTOMembersSection() {
+  const [isMobile, setIsMobile] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [selectedPerson, setSelectedPerson] = useState(null);
+
+  useEffect(() => {
+    const checkWidth = () => setIsMobile(window.innerWidth < 768);
+    checkWidth();
+    window.addEventListener("resize", checkWidth);
+    return () => window.removeEventListener("resize", checkWidth);
+  }, []);
+
+  const limit = isMobile ? 4 : 8;
+  const visibleMembers = expanded ? ptoMembers : ptoMembers.slice(0, limit);
+
+  const openModal = (person) => {
+    setSelectedPerson(person);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = () => {
+    setSelectedPerson(null);
+    document.body.style.overflow = "auto";
+  };
+
   return (
-    <section className="font-serif px-10 py-12">
-      <motion.div
-        variants={SlideUp(0.4)}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        className="max-w-9xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-      >
-        {cardsData.map((card) => (
-          <motion.div
-            key={card.id}
-            whileHover={{ scale: 1.05, y: -5 }}
-            transition={{ type: "spring", stiffness: 200, damping: 10 }}
-            className="relative bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer"
-          >
-            <div className={`h-2 w-full ${card.stripColor}`}></div>
+    <section className="w-full px-5 md:px-10 py-12 font-serif bg-[#F9FAFB]">
+      <section className="rounded-lg p-6 md:p-10 border-2 border-gray-200 shadow-xl bg-white">
+        <motion.h1
+          variants={SlideUp(0.3)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="text-3xl md:text-4xl font-bold text-center text-[#00285E] mb-4"
+        >
+          PTO Members
+        </motion.h1>
 
-            <div
-              className={`absolute top-4 right-2 w-10 h-10 rounded-full ${card.circleColor}`}
-            ></div>
+        <motion.p
+          variants={SlideUp(0.5)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="text-gray-700 text-center mb-10 max-w-3xl mx-auto"
+        >
+          Meet the parents and teachers who serve our community with care and
+          purpose.
+        </motion.p>
 
-            <div className="flex flex-col p-6">
-              <div className="flex items-start gap-4 mb-4">
+        {/* Cards Grid (same style as StaffSection) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 cursor-pointer gap-10">
+          {visibleMembers.map((person, index) => (
+            <div key={index} className="relative">
+              <div className="relative bg-white rounded-md overflow-hidden shadow-lg group border">
+                {/* image */}
                 <img
-                  src={card.icon}
-                  alt="icon"
-                  className="w-18 h-18 object-contain"
+                  src={person.img}
+                  alt={person.name}
+                  className="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-105"
                 />
+
+                {/* content */}
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold text-[#00285E]">
+                    {person.name}
+                  </h3>
+
+                  <div className="flex justify-between items-center">
+                    <p className="text-sm text-gray-600 italic">{person.role}</p>
+
+                    <div
+                      onClick={() => openModal(person)}
+                      className="w-8 h-8 bg-[#CF3528] text-white flex items-center justify-center rounded-full cursor-pointer hover:bg-[#b42d22] transition-colors"
+                    >
+                      <FaPlus size={14} />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <p className="text-gray-600 p">{card.para}</p>
-
-              <h3 className="p font-bold text-[#00285E] mb-2">
-                {card.heading}
-              </h3>
-
-              <p className="text-gray-600 p">{card.desc}</p>
             </div>
+          ))}
+        </div>
+
+        {/* More Button */}
+        {ptoMembers.length > limit && (
+          <div className="flex justify-center mt-10">
+            <button
+              onClick={() => setExpanded((p) => !p)}
+              className="bg-[#CF3528] text-white px-8 py-2 rounded-md hover:bg-[#b42d22] transition-all font-semibold shadow-md"
+            >
+              {expanded ? "Show Less" : "More PTO Members"}
+            </button>
+          </div>
+        )}
+      </section>
+
+      {/* Modal */}
+      <AnimatePresence>
+        {selectedPerson && (
+          <motion.div
+            className="fixed inset-0 bg-black/70 z-[200] flex items-center justify-center px-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeModal}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 40 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 40 }}
+              transition={{ duration: 0.3 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-lg max-w-md w-full relative shadow-2xl overflow-hidden"
+            >
+              <button
+                onClick={closeModal}
+                className="absolute top-4 right-4 text-gray-600 hover:text-[#CF3528] z-10 p-2"
+              >
+                <FaTimes size={20} />
+              </button>
+
+              <div className="p-8 text-center">
+                <div className="relative inline-block mb-6">
+                  <img
+                    src={selectedPerson.img}
+                    alt={selectedPerson.name}
+                    className="w-40 h-40 mx-auto rounded-full object-cover border-4 border-[#CF3528] shadow-md"
+                  />
+                </div>
+
+                <h3 className="text-2xl font-bold text-[#00285E] mb-1">
+                  {selectedPerson.name}
+                </h3>
+                <p className="text-lg italic text-[#CF3528] mb-6">
+                  {selectedPerson.role}
+                </p>
+
+                <div className="h-[1px] bg-gray-200 w-2/3 mx-auto mb-6" />
+
+                <p className="text-gray-700 leading-relaxed text-base">
+                  {selectedPerson.description ||
+                    "This member supports PTO activities and school programs."}
+                </p>
+              </div>
+            </motion.div>
           </motion.div>
-        ))}
-      </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

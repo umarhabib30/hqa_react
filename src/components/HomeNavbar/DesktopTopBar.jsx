@@ -33,17 +33,17 @@ export default function DesktopTopBar({ isOpen, setIsOpen }) {
         </a>
 
         {/* Hamburger/Close Icon */}
-        {/* {isOpen ? (
+        {isOpen ? (
           <FaTimes
             className="text-2xl sm:text-3xl text-gray-800 cursor-pointer"
-            // onClick={() => setIsOpen(false)}
+            onClick={() => setIsOpen(false)}
           />
         ) : (
           <FaBars
             className="text-2xl sm:text-3xl text-[#CECECE] cursor-pointer"
-            // onClick={() => setIsOpen(true)}
+            onClick={() => setIsOpen(true)}
           />
-        )} */}
+        )}
       </div>
     </div>
   );
