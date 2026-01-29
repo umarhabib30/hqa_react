@@ -97,7 +97,7 @@ export default function HoustonQuranAcademyAlumniForm() {
         }
       });
 
-      const res = await fetch("https://hquranacademy.com/api/alumniForm", {
+      const res = await fetch("http://127.0.0.1:8000/api/alumniForm", {
         method: "POST",
         headers: {
           Accept: "application/json",

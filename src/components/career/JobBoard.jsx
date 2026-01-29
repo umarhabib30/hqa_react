@@ -7,19 +7,17 @@ import JobApplicationForm from "./JobApplicationForm";
 const JobBoard = () => {
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
-
   const [categories, setCategories] = useState([]);
   const [locations, setLocations] = useState([]);
-
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
 
-  // 🔹 popup state
+  // Popup state
   const [showForm, setShowForm] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
 
   useEffect(() => {
-    fetch("https://hquranacademy.com/api/jobPosts")
+    fetch("http://127.0.0.1:8000/api/jobPosts")
       .then((res) => res.json())
       .then((data) => {
         if (data.status) {
@@ -34,13 +32,10 @@ const JobBoard = () => {
 
   const handleSearch = () => {
     let result = jobs;
-
-    if (selectedCategory) {
+    if (selectedCategory)
       result = result.filter((j) => j.job_category === selectedCategory);
-    }
-    if (selectedLocation) {
+    if (selectedLocation)
       result = result.filter((j) => j.job_location === selectedLocation);
-    }
     setFilteredJobs(result);
   };
 
@@ -51,6 +46,7 @@ const JobBoard = () => {
 
   return (
     <section className="w-full p-6 md:p-12 font-serif overflow-hidden relative">
+      {/* Heading */}
       <motion.h1
         variants={SlideUp(0.3)}
         initial="hidden"
@@ -135,19 +131,29 @@ const JobBoard = () => {
       {/* POPUP MODAL */}
       {showForm && selectedJob && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl w-full max-w-3xl relative">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.3 }}
+            className="bg-white rounded-3xl w-full max-w-3xl relative shadow-2xl overflow-y-auto max-h-[90vh]"
+          >
+            {/* Close Button */}
             <button
               onClick={() => setShowForm(false)}
-              className="absolute top-3 right-4 text-2xl text-gray-600 hover:text-black"
+              className="absolute top-4 right-4 text-3xl text-gray-600 hover:text-black z-50"
             >
               ✕
             </button>
 
-            <JobApplicationForm
-              jobTitle={selectedJob.job_category}
-              location={selectedJob.job_location}
-            />
-          </div>
+            {/* Form */}
+            <div className="p-8">
+              <JobApplicationForm
+                jobTitle={selectedJob.job_category}
+                location={selectedJob.job_location}
+              />
+            </div>
+          </motion.div>
         </div>
       )}
     </section>
