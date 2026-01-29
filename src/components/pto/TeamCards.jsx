@@ -28,7 +28,7 @@ const ptoMembers = [
     role: "Treasurer",
     description: "Managing finances responsibly to support students.",
   },
-  // Members (optional)
+  
   {
     img: "/pto/team/member1.jpg",
     name: "Member Name 1",

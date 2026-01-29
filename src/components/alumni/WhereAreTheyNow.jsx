@@ -2,19 +2,19 @@ import { SlideLeft, SlideRight, SlideUp } from "../../../utility/animation";
 import { motion } from "framer-motion";
 const graduates = [
   {
-    img: "/alumni/1.jpg",
+    img: "/public/alumni/unii.jpg",
     name: "University of Texas at Austin",
   },
   {
-    img: "/alumni/2.jpg",
+    img: "public/alumni/uuni.jpg",
     name: "Texas A&M University",
   },
   {
-    img: "/alumni/3.jpg",
+    img: "/public/alumni/uni.jpg",
     name: "Rice University",
   },
   {
-    img: "/alumni/4.jpg",
+    img: "/public/alumni/uniiii.jpg",
     name: "University of Houston",
   },
 ];

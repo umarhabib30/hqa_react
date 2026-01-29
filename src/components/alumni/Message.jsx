@@ -13,7 +13,7 @@ const Rooted = () => {
           className="order-2 md:order-1 w-full h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[420px]"
         >
           <img
-            src="/alumni/msg.jpg"
+            src="/public/alumni/thiss.jpeg"
             alt="HQA Admissions Team"
             className="w-full h-full object-cover "
           />
