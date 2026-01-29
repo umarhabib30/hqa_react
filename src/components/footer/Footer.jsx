@@ -10,8 +10,8 @@ import {
 const Footer = () => {
   // Define links mapping
   const quickLinks = [
-    { name: "Employment", path: "" },
-    { name: "Calendar", path: "" },
+    { name: "Employment", path: "/Employment" },
+    { name: "Calendar", path: "schoolCalendar" },
     { name: "Privacy Policy", path: "/privacy-policy" }, 
     { name: "Terms & Conditions", path: "/terms-conditions" }, 
   ];
