@@ -9,19 +9,32 @@ export default function Attendees({ data = [] }) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {data.map((attendee, index) => (
-        <div
-          key={index}
-          className="flex items-center gap-4 p-4 bg-white rounded-md shadow-md"
-        >
-          <img
-            src={attendee.image}
-            alt={attendee.name}
-            className="w-12 h-12 rounded-full object-cover border"
-          />
-          <p className="font-semibold text-gray-800">{attendee.name}</p>
-        </div>
-      ))}
+      {data.map((attendee) => {
+        const fullName = `${attendee.first_name} ${attendee.last_name}`;
+
+        const imageUrl = attendee.profile_pic
+          ? `http://localhost:8000/storage/${attendee.profile_pic}`
+          : "https://via.placeholder.com/100";
+
+        return (
+          <div
+            key={attendee.id}
+            className="flex items-center gap-4 p-4 bg-white rounded-md shadow-md"
+          >
+            <img
+              src={imageUrl}
+              alt={fullName}
+              className="w-12 h-12 rounded-full object-cover border"
+            />
+            <div>
+              <p className="font-semibold text-gray-800">{fullName}</p>
+              <p className="text-xs text-gray-500">
+                Guests: {attendee.number_of_guests}
+              </p>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

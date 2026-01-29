@@ -8,7 +8,7 @@ const StaffSection = () => {
   const [selectedPerson, setSelectedPerson] = useState(null);
 
   useEffect(() => {
-    fetch("https://hquranacademy.com/api/alumniHuston")
+    fetch("http://127.0.0.1:8000/api/alumniHuston")
       .then((res) => res.json())
       .then((data) => {
         if (data.status) {
@@ -17,7 +17,7 @@ const StaffSection = () => {
             name: item.name,
             role: item.profession,
             description: item.description,
-            img: `https://hquranacademy.com/storage/${item.image}`,
+            img: `http://127.0.0.1:8000/storage/${item.image}`,
           }));
           setAlumni(formatted);
         }

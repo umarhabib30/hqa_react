@@ -1,20 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import About from "./About";
 import Attendees from "./Attendees";
+import axios from "axios";
 
-export default function EventTabs({ aboutContent = [], attendeesData = [] }) {
+export default function EventTabs({ aboutContent = [] }) {
   const [activeTab, setActiveTab] = useState("about");
+  const [attendeesData, setAttendeesData] = useState([]);
 
   const customShadow = "0 4px 12px rgba(0, 0, 0, 0.3)";
 
-  // Attendees pagination
+  // pagination
   const INITIAL_COUNT = 6;
   const LOAD_COUNT = 20;
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
+  // ✅ FETCH ATTENDEES
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/pto-event-attendees")
+      .then((res) => setAttendeesData(res.data))
+      .catch((err) => console.error(err));
+  }, []);
+
   const handleShowMore = () => {
     setVisibleCount((prev) =>
-      Math.min(prev + LOAD_COUNT, attendeesData.length),
+      Math.min(prev + LOAD_COUNT, attendeesData.length)
     );
   };
 
@@ -25,25 +35,26 @@ export default function EventTabs({ aboutContent = [], attendeesData = [] }) {
   return (
     <section className="max-w-7xl mx-auto mt-10 px-10 py-12 font-serif">
       <div className="grid grid-cols-1 md:grid-cols-10 gap-6">
-        {/* LEFT — Tabs  */}
+        {/* LEFT — Tabs */}
         <div className="md:col-span-3 flex flex-col space-y-3">
           <button
             style={{ boxShadow: customShadow }}
-            className={`py-3 px-5 text-left font-semibold rounded-l-md transition-colors cursor-pointer ${
+            className={`py-3 px-5 text-left font-semibold rounded-l-md ${
               activeTab === "about"
                 ? "bg-[#00285e] text-white"
-                : "bg-gray-100 text-[#00285e] hover:bg-gray-200"
+                : "bg-gray-100 text-[#00285e]"
             }`}
             onClick={() => setActiveTab("about")}
           >
             About
           </button>
+
           <button
             style={{ boxShadow: customShadow }}
-            className={`py-3 px-5 text-left font-semibold rounded-l-md transition-colors cursor-pointer ${
+            className={`py-3 px-5 text-left font-semibold rounded-l-md ${
               activeTab === "attendees"
                 ? "bg-[#00285e] text-white"
-                : "bg-gray-100 text-[#00285e] hover:bg-gray-200"
+                : "bg-gray-100 text-[#00285e]"
             }`}
             onClick={() => setActiveTab("attendees")}
           >
@@ -51,7 +62,7 @@ export default function EventTabs({ aboutContent = [], attendeesData = [] }) {
           </button>
         </div>
 
-        {/* RIGHT — Tab Content */}
+        {/* RIGHT — Content */}
         <div
           className="md:col-span-7 p-6 bg-white rounded-md"
           style={{ boxShadow: customShadow }}
@@ -62,11 +73,11 @@ export default function EventTabs({ aboutContent = [], attendeesData = [] }) {
             <>
               <Attendees data={attendeesData.slice(0, visibleCount)} />
 
-              <div className="mt-4  gap-3 flex items-center justify-center flex-wrap">
+              <div className="mt-4 flex gap-3 justify-center flex-wrap">
                 {visibleCount < attendeesData.length && (
                   <button
                     onClick={handleShowMore}
-                    className="px-6 py-2 bg-red-700 cursor-pointer  text-white rounded-md hover:bg-red-800 transition"
+                    className="px-6 py-2 bg-red-700 text-white rounded-md"
                   >
                     Show More
                   </button>
@@ -75,7 +86,7 @@ export default function EventTabs({ aboutContent = [], attendeesData = [] }) {
                 {visibleCount > INITIAL_COUNT && (
                   <button
                     onClick={handleShowLess}
-                    className="px-6 py-2 bg-gray-700 cursor-pointer  text-white rounded-md hover:bg-gray-600 transition"
+                    className="px-6 py-2 bg-gray-700 text-white rounded-md"
                   >
                     Show Less
                   </button>
