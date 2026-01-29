@@ -50,7 +50,7 @@ export default function LeadershipSection() {
 
           <div className="relative z-10 w-[90%] md:w-[90%] h-[270px] md:h-[330px] mx-auto mt-10 rounded-xl overflow-hidden">
             <img
-              src="/pto/PTO GROUP PHOTO.jpg"
+              src="/pto/hero.png"
               alt="Team"
               className="w-full h-full object-cover"
             />

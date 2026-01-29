@@ -97,7 +97,7 @@ const App = () => {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-conditions" element={<TermsAndConditions />} />
 
-            <Route path="/events/:slug" element={<EventDetail />} />
+            <Route path="/events/:id" element={<EventDetail />} />
             <Route path="/news/:id" element={<News />} />
           </Route>
 

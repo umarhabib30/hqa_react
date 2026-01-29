@@ -14,7 +14,7 @@ export default function EventTabs({ aboutContent = [], attendeesData = [] }) {
 
   const handleShowMore = () => {
     setVisibleCount((prev) =>
-      Math.min(prev + LOAD_COUNT, attendeesData.length)
+      Math.min(prev + LOAD_COUNT, attendeesData.length),
     );
   };
 

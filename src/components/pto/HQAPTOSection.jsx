@@ -47,7 +47,7 @@ export default function HQAPTOSection() {
           ></div>
 
           <img
-            src="/pto/About HQA PTO.JPEG"
+            src="/pto/childrens.jpg"
             alt="children"
             className="absolute top-4 left-4 w-[92%] cursor-pointer rounded-2xl shadow-xl border-4 border-white"
           />

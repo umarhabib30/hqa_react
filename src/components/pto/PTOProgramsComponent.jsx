@@ -4,7 +4,7 @@ export default function PTOProgramsComponent({ cards = [] }) {
   const defaultCards = [
     {
       id: 1,
-      img: "/pto/Family wellness.jpg",
+      img: "https://picsum.photos/600/400?random=1",
       icon: "/pto/p1.png",
       title: "Family Wellness",
       subtitle:
@@ -12,7 +12,7 @@ export default function PTOProgramsComponent({ cards = [] }) {
     },
     {
       id: 2,
-      img: "/pto/Academic enrichment.jpg",
+      img: "https://picsum.photos/600/400?random=2",
       icon: "/pto/p2.png",
       title: "Academic Enrichment",
       subtitle:
@@ -20,7 +20,7 @@ export default function PTOProgramsComponent({ cards = [] }) {
     },
     {
       id: 3,
-      img: "/pto/Counseling and guidance.jpg",
+      img: "https://picsum.photos/600/400?random=3",
       icon: "/pto/p3.png",
       title: "Counseling & Guidance",
       subtitle:

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { SlideUp } from "../../../utility/animation";
 import { motion } from "framer-motion";
+import JobApplicationForm from "./JobApplicationForm";
 
 const JobBoard = () => {
   const [jobs, setJobs] = useState([]);
@@ -13,6 +14,10 @@ const JobBoard = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
 
+  // 🔹 popup state
+  const [showForm, setShowForm] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null);
+
   useEffect(() => {
     fetch("https://hquranacademy.com/api/jobPosts")
       .then((res) => res.json())
@@ -20,11 +25,7 @@ const JobBoard = () => {
         if (data.status) {
           setJobs(data.data);
           setFilteredJobs(data.data);
-
-          // 🔹 unique categories from jobs
           setCategories([...new Set(data.data.map((j) => j.job_category))]);
-
-          // 🔹 unique locations from jobs
           setLocations([...new Set(data.data.map((j) => j.job_location))]);
         }
       })
@@ -37,22 +38,25 @@ const JobBoard = () => {
     if (selectedCategory) {
       result = result.filter((j) => j.job_category === selectedCategory);
     }
-
     if (selectedLocation) {
       result = result.filter((j) => j.job_location === selectedLocation);
     }
-
     setFilteredJobs(result);
   };
 
+  const openApplyForm = (job) => {
+    setSelectedJob(job);
+    setShowForm(true);
+  };
+
   return (
-    <section className="w-full p-6 md:p-12 font-serif overflow-hidden">
+    <section className="w-full p-6 md:p-12 font-serif overflow-hidden relative">
       <motion.h1
         variants={SlideUp(0.3)}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="h1 italic text-gray-800 font-serif mb-12 text-center"
+        className="h1 italic text-gray-800 mb-12 text-center"
       >
         Job Openings
       </motion.h1>
@@ -65,37 +69,31 @@ const JobBoard = () => {
         viewport={{ once: true }}
         className="bg-[#23335D] p-6 rounded-lg flex flex-col md:flex-row gap-4 mb-12"
       >
-        {/* CATEGORY SELECT */}
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="p-3 rounded-md flex-1 bg-white text-gray-700 font-medium"
+          className="p-3 rounded-md flex-1 bg-white"
         >
           <option value="">All Job Categories</option>
           {categories.map((cat, i) => (
-            <option key={i} value={cat}>
-              {cat}
-            </option>
+            <option key={i}>{cat}</option>
           ))}
         </select>
 
-        {/* LOCATION SELECT */}
         <select
           value={selectedLocation}
           onChange={(e) => setSelectedLocation(e.target.value)}
-          className="p-3 rounded-md flex-1 bg-white text-gray-700 font-medium"
+          className="p-3 rounded-md flex-1 bg-white"
         >
           <option value="">All Job Locations</option>
           {locations.map((loc, i) => (
-            <option key={i} value={loc}>
-              {loc}
-            </option>
+            <option key={i}>{loc}</option>
           ))}
         </select>
 
         <button
           onClick={handleSearch}
-          className="bg-white text-left font-semibold px-4 py-3 rounded-md flex-1 cursor-pointer hover:bg-gray-100"
+          className="bg-white font-semibold px-4 py-3 rounded-md hover:bg-gray-100"
         >
           Search
         </button>
@@ -107,22 +105,51 @@ const JobBoard = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 cursor-pointer"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
       >
         {filteredJobs.map((job) => (
           <div
             key={job.id}
-            className="bg-white p-6 rounded-xl border-1 border-gray-300 flex justify-between items-center hover:shadow-[0_15px_30px_rgba(0,0,0,0.25)] transition-all duration-300 min-h-[150px] md:min-h-[180px]"
+            className="bg-white p-6 rounded-xl border flex flex-col justify-between hover:shadow-xl transition"
           >
             <div>
-              <h2 className="p text-gray-700">{job.job_category}</h2>
-              <p className="text-gray-700 mt-12">{job.job_location}</p>
+              <h2 className="text-lg font-semibold text-gray-800">
+                {job.job_category}
+              </h2>
+              <p className="text-gray-600 mt-2">{job.job_location}</p>
             </div>
 
-            <FaArrowRight className="text-gray-700 text-xl mb-18" />
+            <div className="flex justify-between items-center mt-6">
+              <button
+                onClick={() => openApplyForm(job)}
+                className="bg-[#23335D] text-white px-4 py-2 rounded-md hover:bg-[#1b2850]"
+              >
+                Apply to Job
+              </button>
+              <FaArrowRight className="text-gray-600 text-lg" />
+            </div>
           </div>
         ))}
       </motion.div>
+
+      {/* POPUP MODAL */}
+      {showForm && selectedJob && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl w-full max-w-3xl relative">
+            <button
+              onClick={() => setShowForm(false)}
+              className="absolute top-3 right-4 text-2xl text-gray-600 hover:text-black"
+            >
+              ✕
+            </button>
+
+            <JobApplicationForm
+              jobTitle={selectedJob.job_category}
+              location={selectedJob.job_location}
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 };

@@ -4,7 +4,7 @@ import Details from "../components/eventDetails/Details";
 import EventTabs from "../components/eventDetails/EventTabs";
 
 const EventDetailPage = () => {
-  const { type, id } = useParams();
+  const { id } = useParams();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -14,16 +14,13 @@ const EventDetailPage = () => {
     setError(false);
     setEvent(null);
 
-    if (!type || !id) {
+    if (!id) {
       setLoading(false);
       setError(true);
       return;
     }
 
-    const apiUrl =
-      type === "alumni"
-        ? `https://hquranacademy.com/api/alumniEvents/${id}`
-        : `https://hquranacademy.com/api/ptoEvents/${id}`;
+    const apiUrl = `https://hquranacademy.com/api/ptoEvents/${id}`;
 
     fetch(apiUrl)
       .then((res) => {
@@ -37,11 +34,6 @@ const EventDetailPage = () => {
         }
 
         const raw = res.data;
-
-        if (!raw || !raw.id) {
-          setError(true);
-          return;
-        }
 
         const startDate = new Date(raw.start_date);
 
@@ -57,19 +49,10 @@ const EventDetailPage = () => {
             month: "long",
             day: "numeric",
           }),
+
           time: `${raw.start_time.slice(0, 5)} – ${raw.end_time.slice(0, 5)}`,
 
-          startISO: `${raw.start_date.replace(
-            /-/g,
-            "",
-          )}T${raw.start_time.replace(/:/g, "")}`,
-          endISO: `${raw.end_date.replace(/-/g, "")}T${raw.end_time.replace(
-            /:/g,
-            "",
-          )}`,
-
           location: raw.location,
-          attendees: "0",
 
           mainImage: raw.event_image
             ? `https://hquranacademy.com/storage/${raw.event_image}`
@@ -80,22 +63,15 @@ const EventDetailPage = () => {
             ? `https://hquranacademy.com/storage/${raw.organizer_logo}`
             : "/logo.webp",
 
-          paymentMethods: [],
           aboutContent: [raw.description],
           attendeesData: [],
         };
 
         setEvent(eventObject);
-        setError(false);
       })
-      .catch((err) => {
-        console.error("Fetch error:", err);
-        setError(true);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [type, id]);
+      .catch(() => setError(true))
+      .finally(() => setLoading(false));
+  }, [id]);
 
   if (loading) {
     return <div className="p-20 text-center">Loading…</div>;
@@ -104,7 +80,7 @@ const EventDetailPage = () => {
   if (error || !event) {
     return (
       <div className="p-20 text-center text-red-600 text-xl">
-        Event Not Found (FROM EventDetailPage)
+        Event Not Found
       </div>
     );
   }
