@@ -4,23 +4,23 @@ const cards = [
   {
     id: 1,
     text: "Foster meaningful connections among graduates.",
-    img: "/alumni/m1.jpg",
+    img: "/alumni/Meaningful connection.jpg",
   },
   {
     id: 2,
     text: "Celebrate the accomplishments and milestones of our alumni.",
-    img: "/alumni/m2.jpg",
+    img: "public/alumni/Celebrate.jpg",
   },
   {
     id: 3,
     text: "Support the mission and vision of Houston Quran Academy through shared purpose and community.",
-    img: "/alumni/m3.jpg",
+    img: "/alumni/Support the mission.png",
   },
 
   {
     id: 4,
     text: "Provide opportunities for mentorship, collaboration, and continued growth rooted in Qur’anic values.",
-    img: "/alumni/m4.jpg",
+    img: "public/alumni/Mentoring .png",
   },
 ];
 

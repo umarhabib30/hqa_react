@@ -22,7 +22,7 @@ const Hero = () => {
       {/* Background Image */}
       <div className="relative w-full rounded-2xl overflow-hidden">
         <img
-          src="/about/hero.jpg"
+          src="/public/alumni/this.jpeg"
           alt="About"
           className="w-full h-[250px] sm:h-[350px] md:h-[400px] lg:h-[500px] object-cover rounded-2xl"
         />

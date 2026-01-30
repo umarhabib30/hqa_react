@@ -7,16 +7,13 @@ import DesktopGallery from "./DesktopGallery";
 import MobileScroller from "./MobileScroller";
 
 const allStudents = [
-  { id: 1, image: "home/student1.jpg", name: "Malik Javed" },
-  { id: 2, image: "home/student2.jpg", name: "Aisha Khan" },
-  { id: 3, image: "home/student3.jpg", name: "Omar Hassan" },
-  { id: 4, image: "home/student4.jpg", name: "Fatima Ahmed" },
-  { id: 5, image: "home/student5.jpg", name: "Zainab Ali" },
-  { id: 6, image: "donation/s1.jpg", name: "Ali Raza" },
-  { id: 7, image: "donation/s3.jpg", name: "Noor Fatima" },
-  { id: 8, image: "donation/s2.jpg", name: "Ahmed Sohail" },
-  { id: 9, image: "donation/s1.jpg", name: "Sana Tariq" },
-  { id: 10, image: "donation/s3.jpg", name: "Usman Ghani" },
+  { id: 1, image: "/alumni/Abdul-Rahman Javaid.jpeg", name: "Malik Javed" },
+  { id: 2, image: "public/alumni/Faraz Hassan .jpeg", name: "Aisha Khan" },
+  { id: 3, image: "public/alumni/Hana Munshi.jpeg", name: "Omar Hassan" },
+  { id: 4, image: "public/alumni/Ibrahim Haider.jpeg", name: "Fatima Ahmed" },
+  { id: 5, image: "public/alumni/Mohammad Moin Siddiq .jpeg", name: "Zainab Ali" },
+  { id: 6, image: "public/alumni/Omar Abdelmoula.jpeg", name: "Ali Raza" },
+  { id: 8, image: "public/alumni/Rameen Javaid .jpeg", name: "Ahmed Sohail" },
 ];
 
 const STUDENTS_PER_PAGE = 5;
