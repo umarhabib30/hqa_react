@@ -118,7 +118,7 @@ const JobBoard = () => {
             <div className="flex justify-between items-center mt-6">
               <button
                 onClick={() => openApplyForm(job)}
-                className="bg-[#23335D] text-white px-4 py-2 rounded-md hover:bg-[#1b2850]"
+                className="bg-[#23335D] cursor-pointer text-white px-4 py-2 rounded-md hover:bg-[#1b2850]"
               >
                 Apply to Job
               </button>
@@ -141,7 +141,7 @@ const JobBoard = () => {
             {/* Close Button */}
             <button
               onClick={() => setShowForm(false)}
-              className="absolute top-4 right-4 text-3xl text-gray-600 hover:text-black z-50"
+              className="absolute top-4 cursor-pointer right-4 text-3xl text-gray-600 hover:text-black z-50"
             >
               ✕
             </button>

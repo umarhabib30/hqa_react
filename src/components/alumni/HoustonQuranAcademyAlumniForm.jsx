@@ -370,7 +370,7 @@ export default function HoustonQuranAcademyAlumniForm() {
                   <button
                     type="button"
                     onClick={() => validateStep() && setStep(step + 1)}
-                    className="flex items-center gap-2 bg-[#0a2540] text-white px-10 py-4 rounded-xl font-bold shadow-lg hover:bg-[#0f365d] transition-all"
+                    className="flex items-center gap-2 bg-[#0a2540] cursor-pointer text-white px-10 py-4 rounded-xl font-bold shadow-lg hover:bg-[#0f365d] transition-all"
                   >
                     Next <ChevronRight size={20} />
                   </button>

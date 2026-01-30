@@ -229,7 +229,7 @@ export default function JobApplicationForm({ jobTitle, location }) {
           {/* SUBMIT BUTTON */}
           <button
             type="submit"
-            className="w-full bg-[#23335D] hover:bg-[#1a2646] text-white font-bold py-4 rounded-xl shadow-lg transition-transform active:scale-95"
+            className="w-full bg-[#23335D] cursor-pointer hover:bg-[#1a2646] text-white font-bold py-4 rounded-xl shadow-lg transition-transform active:scale-95"
           >
             Submit Application
           </button>

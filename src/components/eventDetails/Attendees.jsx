@@ -11,7 +11,6 @@ export default function Attendees({ data = [] }) {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {data.map((attendee) => {
         const fullName = `${attendee.first_name} ${attendee.last_name}`;
-
         const imageUrl = attendee.profile_pic
           ? `http://localhost:8000/storage/${attendee.profile_pic}`
           : "https://via.placeholder.com/100";

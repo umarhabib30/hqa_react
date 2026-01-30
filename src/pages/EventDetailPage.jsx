@@ -20,7 +20,7 @@ const EventDetailPage = () => {
       return;
     }
 
-    const apiUrl = `https://hquranacademy.com/api/ptoEvents/${id}`;
+    const apiUrl = `http://localhost:8000/api/ptoEvents/${id}`;
 
     fetch(apiUrl)
       .then((res) => {
@@ -34,7 +34,6 @@ const EventDetailPage = () => {
         }
 
         const raw = res.data;
-
         const startDate = new Date(raw.start_date);
 
         const eventObject = {
@@ -42,29 +41,22 @@ const EventDetailPage = () => {
           title: raw.title,
           subtitle: raw.description,
           description: raw.description,
-
           fullDate: startDate.toLocaleDateString("en-US", {
             weekday: "long",
             year: "numeric",
             month: "long",
             day: "numeric",
           }),
-
           time: `${raw.start_time.slice(0, 5)} – ${raw.end_time.slice(0, 5)}`,
-
           location: raw.location,
-
           mainImage: raw.event_image
-            ? `https://hquranacademy.com/storage/${raw.event_image}`
+            ? `http://localhost:8000/storage/${raw.event_image}`
             : "/event/event1.jpg",
-
           organizerName: raw.organizer_name,
           organizerImage: raw.organizer_logo
-            ? `https://hquranacademy.com/storage/${raw.organizer_logo}`
+            ? `http://localhost:8000/storage/${raw.organizer_logo}`
             : "/logo.webp",
-
           aboutContent: [raw.description],
-          attendeesData: [],
         };
 
         setEvent(eventObject);
@@ -73,25 +65,18 @@ const EventDetailPage = () => {
       .finally(() => setLoading(false));
   }, [id]);
 
-  if (loading) {
-    return <div className="p-20 text-center">Loading…</div>;
-  }
-
-  if (error || !event) {
+  if (loading) return <div className="p-20 text-center">Loading…</div>;
+  if (error || !event)
     return (
       <div className="p-20 text-center text-red-600 text-xl">
         Event Not Found
       </div>
     );
-  }
 
   return (
     <>
       <Details event={event} />
-      <EventTabs
-        aboutContent={event.aboutContent}
-        attendeesData={event.attendeesData}
-      />
+      <EventTabs eventId={event.id} aboutContent={event.aboutContent} />
     </>
   );
 };

@@ -39,7 +39,7 @@ const Pto = () => {
         <HQAPTOSection />
         <StatsCards />
         <UpcomingEvents
-          apiUrl="https://hquranacademy.com/api/ptoEvents"
+          apiUrl="http://localhost:8000/api/ptoEvents"
           eventType="pto"
         />
         <PTOProgramsComponent />

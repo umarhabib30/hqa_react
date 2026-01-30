@@ -3,39 +3,36 @@ import About from "./About";
 import Attendees from "./Attendees";
 import axios from "axios";
 
-export default function EventTabs({ aboutContent = [] }) {
+export default function EventTabs({ eventId, aboutContent = [] }) {
   const [activeTab, setActiveTab] = useState("about");
   const [attendeesData, setAttendeesData] = useState([]);
-
   const customShadow = "0 4px 12px rgba(0, 0, 0, 0.3)";
 
-  // pagination
   const INITIAL_COUNT = 6;
   const LOAD_COUNT = 20;
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
-  // ✅ FETCH ATTENDEES
   useEffect(() => {
+    if (!eventId) return;
+
     axios
-      .get("http://localhost:8000/api/pto-event-attendees")
+      .get(`http://localhost:8000/api/pto-event-attendees`, {
+        params: { event_id: eventId },
+      })
       .then((res) => setAttendeesData(res.data))
       .catch((err) => console.error(err));
-  }, []);
+  }, [eventId]);
 
-  const handleShowMore = () => {
+  const handleShowMore = () =>
     setVisibleCount((prev) =>
-      Math.min(prev + LOAD_COUNT, attendeesData.length)
+      Math.min(prev + LOAD_COUNT, attendeesData.length),
     );
-  };
 
-  const handleShowLess = () => {
-    setVisibleCount(INITIAL_COUNT);
-  };
+  const handleShowLess = () => setVisibleCount(INITIAL_COUNT);
 
   return (
     <section className="max-w-7xl mx-auto mt-10 px-10 py-12 font-serif">
       <div className="grid grid-cols-1 md:grid-cols-10 gap-6">
-        {/* LEFT — Tabs */}
         <div className="md:col-span-3 flex flex-col space-y-3">
           <button
             style={{ boxShadow: customShadow }}
@@ -62,7 +59,6 @@ export default function EventTabs({ aboutContent = [] }) {
           </button>
         </div>
 
-        {/* RIGHT — Content */}
         <div
           className="md:col-span-7 p-6 bg-white rounded-md"
           style={{ boxShadow: customShadow }}
@@ -82,7 +78,6 @@ export default function EventTabs({ aboutContent = [] }) {
                     Show More
                   </button>
                 )}
-
                 {visibleCount > INITIAL_COUNT && (
                   <button
                     onClick={handleShowLess}

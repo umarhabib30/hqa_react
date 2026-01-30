@@ -12,9 +12,8 @@ export default function Details({ event }) {
     last_name: "",
     email: "",
     phone: "",
-    will_attend: true, // BOOLEAN
     number_of_guests: 0,
-    profile_pic: null, // FILE
+    profile_pic: null,
   });
 
   const getGoogleCalendarURL = () => {
@@ -26,22 +25,16 @@ export default function Details({ event }) {
 
   const openGoogleMap = () => {
     window.open(
-      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-        event.location,
-      )}`,
+      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`,
       "_blank",
     );
   };
 
-  // HANDLE INPUT
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
 
     if (type === "file") {
       setForm({ ...form, [name]: files[0] });
-    } else if (name === "will_attend") {
-      // Always store as boolean
-      setForm({ ...form, will_attend: value === "true" });
     } else if (type === "number") {
       setForm({ ...form, [name]: parseInt(value) || 0 });
     } else {
@@ -49,16 +42,18 @@ export default function Details({ event }) {
     }
   };
 
-  // SUBMIT FORM
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrors({});
 
-    const formData = new FormData();
-    Object.entries(form).forEach(([key, value]) => formData.append(key, value));
-
     try {
+      const formData = new FormData();
+      Object.entries(form).forEach(([key, value]) =>
+        formData.append(key, value),
+      );
+      formData.append("event_id", event.id); // ✅ Include the event ID
+
       await axios.post(
         "http://localhost:8000/api/pto-event-attendees",
         formData,
@@ -75,7 +70,6 @@ export default function Details({ event }) {
         last_name: "",
         email: "",
         phone: "",
-        will_attend: true,
         number_of_guests: 0,
         profile_pic: null,
       });
@@ -92,7 +86,6 @@ export default function Details({ event }) {
 
   return (
     <section className="w-full px-10 bg-[#bcddfc] py-12 font-serif relative">
-      {/* EVENT UI */}
       <div className="border border-gray-200 rounded-md px-10 py-6 max-w-7xl bg-white mx-auto">
         <h1 className="text-4xl text-center text-[#092962] mb-4">
           {event.title}
@@ -156,7 +149,6 @@ export default function Details({ event }) {
         </div>
       </div>
 
-      {/* RSVP MODAL */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg w-full max-w-lg p-8 relative shadow-2xl">
@@ -172,39 +164,30 @@ export default function Details({ event }) {
             </h2>
 
             <form className="space-y-4 text-sm" onSubmit={handleSubmit}>
-              {/* Name */}
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <input
-                    name="first_name"
-                    placeholder="First Name"
-                    className="border p-2 rounded w-full"
-                    value={form.first_name}
-                    onChange={handleChange}
-                  />
-                  {errors.first_name && (
-                    <p className="text-red-500 text-xs">
-                      {errors.first_name[0]}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <input
-                    name="last_name"
-                    placeholder="Last Name"
-                    className="border p-2 rounded w-full"
-                    value={form.last_name}
-                    onChange={handleChange}
-                  />
-                  {errors.last_name && (
-                    <p className="text-red-500 text-xs">
-                      {errors.last_name[0]}
-                    </p>
-                  )}
-                </div>
+                <input
+                  name="first_name"
+                  placeholder="First Name"
+                  className="border p-2 rounded w-full"
+                  value={form.first_name}
+                  onChange={handleChange}
+                />
+                {errors.first_name && (
+                  <p className="text-red-500 text-xs">{errors.first_name[0]}</p>
+                )}
+
+                <input
+                  name="last_name"
+                  placeholder="Last Name"
+                  className="border p-2 rounded w-full"
+                  value={form.last_name}
+                  onChange={handleChange}
+                />
+                {errors.last_name && (
+                  <p className="text-red-500 text-xs">{errors.last_name[0]}</p>
+                )}
               </div>
 
-              {/* Email */}
               <input
                 name="email"
                 type="email"
@@ -217,7 +200,6 @@ export default function Details({ event }) {
                 <p className="text-red-500 text-xs">{errors.email[0]}</p>
               )}
 
-              {/* Phone */}
               <input
                 name="phone"
                 type="text"
@@ -230,24 +212,6 @@ export default function Details({ event }) {
                 <p className="text-red-500 text-xs">{errors.phone[0]}</p>
               )}
 
-              {/* Will Attend */}
-              {/* <select
-                name="will_attend"
-                value={form.will_attend ? "1" : "0"}
-                onChange={(e) =>
-                  setForm({ ...form, will_attend: e.target.value === "1" })
-                }
-                className="border p-2 rounded w-full"
-              >
-                <option value="1">Yes, I will attend</option>
-                <option value="0">No, I will not attend</option>
-              </select>
-
-              {errors.will_attend && (
-                <p className="text-red-500 text-xs">{errors.will_attend[0]}</p>
-              )} */}
-
-              {/* Number of Guests */}
               <input
                 name="number_of_guests"
                 type="number"
@@ -262,7 +226,6 @@ export default function Details({ event }) {
                 </p>
               )}
 
-              {/* Profile Pic */}
               <input
                 name="profile_pic"
                 type="file"
